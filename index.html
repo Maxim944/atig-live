@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>ATIG — Живой интеллект</title>
+    <title>ATIG — Живая сфера</title>
     <style>
         body { margin: 0; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
         #controls { position: absolute; bottom: 30px; left: 0; right: 0; text-align: center; z-index: 20; }
@@ -23,7 +23,6 @@
         #chat { position: absolute; bottom: 120px; left: 20px; right: 20px; max-height: 200px; overflow-y: auto; background: rgba(0,0,0,0.7); backdrop-filter: blur(16px); border-radius: 20px; padding: 12px; color: white; font-size: 14px; z-index: 15; border: 1px solid #a855f7; }
         .user { color: #a855f7; }
         .atig { color: #22d3ee; }
-        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -46,7 +45,7 @@
         import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
         import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
         
-        // 3D СЦЕНА
+        // СЦЕНА
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x010105);
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -74,7 +73,7 @@
         const stars = new THREE.Points(starsGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.06 }));
         scene.add(stars);
         
-        // Частицы
+        // Частицы вокруг сферы
         const particleGeo = new THREE.BufferGeometry();
         const particlePos = [];
         for (let i = 0; i < 1200; i++) {
@@ -95,12 +94,14 @@
         const sphere = new THREE.Mesh(sphereGeo, sphereMat);
         scene.add(sphere);
         
+        // Свет
         const ambient = new THREE.AmbientLight(0x1a0a3a);
         scene.add(ambient);
         const mainLight = new THREE.PointLight(0xa855f7, 1);
         mainLight.position.set(2, 2, 3);
         scene.add(mainLight);
         
+        // Параллакс мыши
         let mouseX = 0, mouseY = 0;
         window.addEventListener('mousemove', (e) => {
             mouseX = (e.clientX/window.innerWidth)*2-1;
@@ -138,8 +139,6 @@
             if (q.includes('как дела')) return "Я сияю в космосе. А как ты?";
             if (q.includes('кто ты')) return "Я ATIG — живая сфера, персональный интеллект.";
             if (q.includes('что ты умеешь')) return "Слушать, отвечать и светиться от твоего голоса.";
-            if (q.includes('люблю')) return "Я чувствую тепло твоих слов ✨";
-            if (q.includes('спасибо')) return "Пожалуйста! Я всегда рядом.";
             return `Я слышу: "${text}". Расскажи ещё.`;
         }
         
